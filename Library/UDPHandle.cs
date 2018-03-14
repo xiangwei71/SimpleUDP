@@ -74,7 +74,12 @@ namespace Library
         }
 
         int listenPort;
-        UdpClient receiver;
+        UdpClient client;
+
+        public UdpClient Get()
+        {
+            return client;
+        }
 
         public UDPHandle(int listenPort)
         {
@@ -86,11 +91,11 @@ namespace Library
 
         public void StartReciver()
         {
-            receiver = new UdpClient(listenPort);
+            client = new UdpClient(listenPort);
 
             IPEndPoint senderEP = new IPEndPoint(IPAddress.Any, 0);
             Console.WriteLine("Waiting...");
-            receiver.BeginReceive(BeginReceiveCallback, new UDPState { udpClient = this.receiver, senderEP = senderEP } );
+            client.BeginReceive(BeginReceiveCallback, new UDPState { udpClient = this.client, senderEP = senderEP } );
         }
 
         void BeginReceiveCallback(IAsyncResult ar)
@@ -105,6 +110,7 @@ namespace Library
                     IPEndPoint EP = s.senderEP;
                     Byte[] receiveBytes = udpClient.EndReceive(ar, ref EP);
                     string pack = Encoding.UTF8.GetString(receiveBytes);
+                    Console.WriteLine("port ="+EP.Port);
 
                     //handle msg
                     string[] pairs = CommandHelper.GetPairs(pack);
@@ -123,10 +129,10 @@ namespace Library
 
         public void Quit()
         {
-            if (receiver != null)
+            if (client != null)
             {
-                receiver.Close();
-                receiver = null;
+                client.Close();
+                client = null;
             }
 
             Console.WriteLine("finish");

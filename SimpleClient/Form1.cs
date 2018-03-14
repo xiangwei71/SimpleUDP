@@ -94,10 +94,8 @@ namespace SimpleClient
             debug_label.Text = pack;
             byte[] data = Encoding.UTF8.GetBytes(pack);
 
-            UdpClient sender = new UdpClient();
-            sender.Connect(serverIP, serverListenPort);
-            sender.Send(data, data.Length);
-            sender.Close();
+            UdpClient sender = uDPHandle.Get();
+            sender.BeginSend(data, data.Length, serverIP, serverListenPort,null, sender);
         }
 
         void Init()

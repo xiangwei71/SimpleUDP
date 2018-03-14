@@ -91,10 +91,8 @@ namespace SimpleServer
 
             foreach (var ep in clientDictionary.Values)
             {
-                UdpClient sender = new UdpClient();
-                sender.Connect(ep);
-                sender.Send(data, data.Length);
-                sender.Close();
+                UdpClient sender = uDPHandle.Get();
+                sender.BeginSend(data, data.Length, ep, (ar)=> { }, sender);
             }
         }
 
