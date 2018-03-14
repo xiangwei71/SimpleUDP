@@ -21,6 +21,10 @@ namespace SimpleClient
         public Form1()
         {
             InitializeComponent();
+
+            Closing += (sender, e) => {
+                if (uDPHandle != null) uDPHandle.Quit();
+            };
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -40,6 +44,7 @@ namespace SimpleClient
         private void button2_Click(object sender, EventArgs e)
         {
             uDPHandle.Quit();
+            uDPHandle = null;
         }
 
         private void button3_Click(object sender, EventArgs e)
