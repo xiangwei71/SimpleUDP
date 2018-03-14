@@ -30,6 +30,8 @@ namespace SimpleServer
         private void button1_Click(object sender, EventArgs e)
         {
             Init();
+            listen_btn.Enabled = false;
+            quit_btn.Enabled = true;
         }
 
         void Init()
@@ -38,7 +40,7 @@ namespace SimpleServer
 
             uDPHandle = new UDPHandle(listenPort)
             {
-                msgHandler = (commandType, content) =>
+                packHandler = (commandType, content) =>
                 {
                     switch (commandType)
                     {
@@ -66,8 +68,14 @@ namespace SimpleServer
 
         private void button2_Click(object sender, EventArgs e)
         {
-            uDPHandle.Quit();
-            uDPHandle = null;
+            if (uDPHandle != null)
+            {
+                uDPHandle.Quit();
+                uDPHandle = null;
+            }
+
+            listen_btn.Enabled = true;
+            quit_btn.Enabled = false;
         }
 
         Dictionary<String, IPEndPoint> clientDictionary;

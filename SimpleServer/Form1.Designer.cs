@@ -28,30 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.quit_btn = new System.Windows.Forms.Button();
+            this.listen_btn = new System.Windows.Forms.Button();
             this.word_listbox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
-            // button2
+            // quit_btn
             // 
-            this.button2.Location = new System.Drawing.Point(43, 89);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "quit";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.quit_btn.Enabled = false;
+            this.quit_btn.Location = new System.Drawing.Point(43, 89);
+            this.quit_btn.Name = "quit_btn";
+            this.quit_btn.Size = new System.Drawing.Size(75, 23);
+            this.quit_btn.TabIndex = 2;
+            this.quit_btn.Text = "quit";
+            this.quit_btn.UseVisualStyleBackColor = true;
+            this.quit_btn.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button1
+            // listen_btn
             // 
-            this.button1.Location = new System.Drawing.Point(43, 43);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "listen";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.listen_btn.Location = new System.Drawing.Point(43, 43);
+            this.listen_btn.Name = "listen_btn";
+            this.listen_btn.Size = new System.Drawing.Size(75, 23);
+            this.listen_btn.TabIndex = 0;
+            this.listen_btn.Text = "listen";
+            this.listen_btn.UseVisualStyleBackColor = true;
+            this.listen_btn.Click += new System.EventHandler(this.button1_Click);
             // 
             // word_listbox
             // 
@@ -68,18 +69,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.word_listbox);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.quit_btn);
+            this.Controls.Add(this.listen_btn);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "UDPChatServer";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button quit_btn;
+        private System.Windows.Forms.Button listen_btn;
         private System.Windows.Forms.ListBox word_listbox;
     }
 }

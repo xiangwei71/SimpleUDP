@@ -66,36 +66,63 @@ namespace Library
 
     public class UDPHandle
     {
+        //http://www.voidcn.com/article/p-ybrxkfvk-r.html
+        class UDPState
+        {
+            public UdpClient udpClient;
+            public IPEndPoint senderEP;
+        }
+
         int listenPort;
         UdpClient receiver;
-        Thread thread;
 
         public UDPHandle(int listenPort)
         {
             this.listenPort = listenPort;
 
-            if(msgHandler==null)
-                msgHandler = (commandType, content) => { };//do nothing
+            if(packHandler==null)
+                packHandler = (commandType, content) => { };//do nothing
         }
 
         public void StartReciver()
         {
             receiver = new UdpClient(listenPort);
 
-            thread = new Thread(new ThreadStart(DoReceive));
-            thread.Start();
+            IPEndPoint senderEP = new IPEndPoint(IPAddress.Any, 0);
+            Console.WriteLine("Waiting...");
+            receiver.BeginReceive(BeginReceiveCallback, new UDPState { udpClient = this.receiver, senderEP = senderEP } );
+        }
+
+        void BeginReceiveCallback(IAsyncResult ar)
+        {
+            
+            try
+            {
+                if (ar.AsyncState is UDPState s)
+                {
+                    UdpClient udpClient = s.udpClient;
+
+                    IPEndPoint EP = s.senderEP;
+                    Byte[] receiveBytes = udpClient.EndReceive(ar, ref EP);
+                    string pack = Encoding.UTF8.GetString(receiveBytes);
+
+                    //handle msg
+                    string[] pairs = CommandHelper.GetPairs(pack);
+                    string commandType = pairs[0];
+                    string content = pairs[1];
+                    packHandler(commandType, content);
+
+                    Console.WriteLine("Waiting...");
+                    udpClient.BeginReceive(BeginReceiveCallback, s);
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public void Quit()
         {
-            if (thread != null)
-            {
-                thread.Interrupt();
-                thread.Abort();
-
-                thread = null;
-            }
-
             if (receiver != null)
             {
                 receiver.Close();
@@ -105,24 +132,7 @@ namespace Library
             Console.WriteLine("finish");
         }
 
-        public delegate void MsgHandler(string commandType, string content);
-        public MsgHandler msgHandler;
-
-        void DoReceive()
-        {
-            while (true)
-            {
-                Console.WriteLine("Waiting...");
-                IPEndPoint senderEP = new IPEndPoint(IPAddress.Any, 0);
-                byte[] data = receiver.Receive(ref senderEP);
-                string pack = Encoding.UTF8.GetString(data);
-
-                string[] pairs = CommandHelper.GetPairs(pack);
-                string commandType = pairs[0];
-                string content = pairs[1];
-
-                msgHandler(commandType,content);
-            }
-        }
+        public delegate void PackHandler(string commandType, string content);
+        public PackHandler packHandler;
     }
 }

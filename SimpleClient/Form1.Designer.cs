@@ -30,12 +30,12 @@
         {
             this.listenport_text = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.connet_btn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.userid_text = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.word_text = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.quit_btn = new System.Windows.Forms.Button();
             this.word_listbox = new System.Windows.Forms.ListBox();
             this.button3 = new System.Windows.Forms.Button();
             this.debug_label = new System.Windows.Forms.Label();
@@ -58,15 +58,15 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "listenPort";
             // 
-            // button1
+            // connet_btn
             // 
-            this.button1.Location = new System.Drawing.Point(264, 93);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "connect";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.connet_btn.Location = new System.Drawing.Point(264, 93);
+            this.connet_btn.Name = "connet_btn";
+            this.connet_btn.Size = new System.Drawing.Size(75, 23);
+            this.connet_btn.TabIndex = 2;
+            this.connet_btn.Text = "connect";
+            this.connet_btn.UseVisualStyleBackColor = true;
+            this.connet_btn.Click += new System.EventHandler(this.button1_Click);
             // 
             // label2
             // 
@@ -100,15 +100,16 @@
             this.word_text.Size = new System.Drawing.Size(100, 25);
             this.word_text.TabIndex = 6;
             // 
-            // button2
+            // quit_btn
             // 
-            this.button2.Location = new System.Drawing.Point(382, 93);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "quit";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.quit_btn.Enabled = false;
+            this.quit_btn.Location = new System.Drawing.Point(382, 93);
+            this.quit_btn.Name = "quit_btn";
+            this.quit_btn.Size = new System.Drawing.Size(75, 23);
+            this.quit_btn.TabIndex = 5;
+            this.quit_btn.Text = "quit";
+            this.quit_btn.UseVisualStyleBackColor = true;
+            this.quit_btn.Click += new System.EventHandler(this.button2_Click);
             // 
             // word_listbox
             // 
@@ -148,14 +149,14 @@
             this.Controls.Add(this.word_listbox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.word_text);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.quit_btn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.userid_text);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.connet_btn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listenport_text);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "UDPChatClient";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,12 +166,12 @@
 
         private System.Windows.Forms.TextBox listenport_text;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button connet_btn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox userid_text;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox word_text;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button quit_btn;
         private System.Windows.Forms.ListBox word_listbox;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label debug_label;

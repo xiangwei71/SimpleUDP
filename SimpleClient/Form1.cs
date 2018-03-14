@@ -31,6 +31,8 @@ namespace SimpleClient
         {
             Init();
             SendAddUser();
+            connet_btn.Enabled = false;
+            quit_btn.Enabled = true;
         }
 
         void SendAddUser()
@@ -43,8 +45,14 @@ namespace SimpleClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            uDPHandle.Quit();
-            uDPHandle = null;
+            if (uDPHandle != null)
+            {
+                uDPHandle.Quit();
+                uDPHandle = null;
+            }
+
+            connet_btn.Enabled = true;
+            quit_btn.Enabled = false;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -68,7 +76,7 @@ namespace SimpleClient
             // 取得本機的 IpHostEntry 類別實體
             IPHostEntry iphostentry = Dns.GetHostEntry(strHostName);
 
-
+            //不可能都沒有吧
             foreach (IPAddress ipaddress in iphostentry.AddressList)
             {
                 // 只取得IP V4的Address
@@ -97,7 +105,7 @@ namespace SimpleClient
             listenPort = int.Parse(listenport_text.Text);
             uDPHandle = new UDPHandle(listenPort)
             {
-                msgHandler = (commandType, content) =>
+                packHandler = (commandType, content) =>
                 {
                     switch (commandType)
                     {
