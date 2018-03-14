@@ -31,7 +31,7 @@ namespace SimpleClient
         {
             Init();
             SendAddUser();
-            connet_btn.Enabled = false;
+            listen_btn.Enabled = false;
             quit_btn.Enabled = true;
         }
 
@@ -51,7 +51,7 @@ namespace SimpleClient
                 uDPHandle = null;
             }
 
-            connet_btn.Enabled = true;
+            listen_btn.Enabled = true;
             quit_btn.Enabled = false;
         }
 

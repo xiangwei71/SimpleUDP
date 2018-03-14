@@ -30,7 +30,7 @@
         {
             this.listenport_text = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.connet_btn = new System.Windows.Forms.Button();
+            this.listen_btn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.userid_text = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -58,15 +58,15 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "listenPort";
             // 
-            // connet_btn
+            // listen_btn
             // 
-            this.connet_btn.Location = new System.Drawing.Point(264, 93);
-            this.connet_btn.Name = "connet_btn";
-            this.connet_btn.Size = new System.Drawing.Size(75, 23);
-            this.connet_btn.TabIndex = 2;
-            this.connet_btn.Text = "connect";
-            this.connet_btn.UseVisualStyleBackColor = true;
-            this.connet_btn.Click += new System.EventHandler(this.button1_Click);
+            this.listen_btn.Location = new System.Drawing.Point(264, 93);
+            this.listen_btn.Name = "listen_btn";
+            this.listen_btn.Size = new System.Drawing.Size(75, 23);
+            this.listen_btn.TabIndex = 2;
+            this.listen_btn.Text = "listen";
+            this.listen_btn.UseVisualStyleBackColor = true;
+            this.listen_btn.Click += new System.EventHandler(this.button1_Click);
             // 
             // label2
             // 
@@ -152,7 +152,7 @@
             this.Controls.Add(this.quit_btn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.userid_text);
-            this.Controls.Add(this.connet_btn);
+            this.Controls.Add(this.listen_btn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listenport_text);
             this.Name = "Form1";
@@ -166,7 +166,7 @@
 
         private System.Windows.Forms.TextBox listenport_text;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button connet_btn;
+        private System.Windows.Forms.Button listen_btn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox userid_text;
         private System.Windows.Forms.Label label3;
