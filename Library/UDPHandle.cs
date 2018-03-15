@@ -78,7 +78,7 @@ namespace Library
             public IPEndPoint senderEP;
         }
 
-        int listenPort;
+        int bindPort;
         UdpClient client;
 
         public UdpClient Get()
@@ -88,12 +88,12 @@ namespace Library
 
         public UDPHandle()
         {
-            this.listenPort = 0;//自動找一個沒使用的port
+            this.bindPort = 0;//自動找一個沒使用的port
         }
 
-        public UDPHandle(int listenPort)
+        public UDPHandle(int bindPort)
         {
-            this.listenPort = listenPort;
+            this.bindPort = bindPort;
 
             if(packHandler==null)
                 packHandler = (commandType, content, EP) => { };//do nothing
@@ -101,7 +101,7 @@ namespace Library
 
         public void StartReciver()
         {
-            client = new UdpClient(listenPort);
+            client = new UdpClient(bindPort);
 
             IPEndPoint senderEP = new IPEndPoint(IPAddress.Any, 0);
             Console.WriteLine("Waiting...");
