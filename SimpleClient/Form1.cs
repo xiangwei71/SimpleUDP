@@ -17,13 +17,13 @@ namespace SimpleClient
         string serverIP = "127.0.0.1";
         int serverListenPort = 5555;
         int listenPort;
-        UDPHandle uDPHandle;
+        UDPHandle udpHandle;
         public Form1()
         {
             InitializeComponent();
 
             Closing += (sender, e) => {
-                if (uDPHandle != null) uDPHandle.Quit();
+                Quit();
             };
         }
 
@@ -45,14 +45,19 @@ namespace SimpleClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (uDPHandle != null)
-            {
-                uDPHandle.Quit();
-                uDPHandle = null;
-            }
+            Quit();
 
             listen_btn.Enabled = true;
             quit_btn.Enabled = false;
+        }
+
+        void Quit()
+        {
+            if (udpHandle != null)
+            {
+                udpHandle.Quit();
+                udpHandle = null;
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -94,14 +99,14 @@ namespace SimpleClient
             debug_label.Text = pack;
             byte[] data = Encoding.UTF8.GetBytes(pack);
 
-            UdpClient sender = uDPHandle.Get();
+            UdpClient sender = udpHandle.Get();
             sender.BeginSend(data, data.Length, serverIP, serverListenPort,null, sender);
         }
 
         void Init()
         {
             listenPort = int.Parse(listenport_text.Text);
-            uDPHandle = new UDPHandle(listenPort)
+            udpHandle = new UDPHandle(listenPort)
             {
                 packHandler = (commandType, content) =>
                 {
@@ -113,7 +118,7 @@ namespace SimpleClient
                     }
                 }
             };
-            uDPHandle.StartReciver();
+            udpHandle.StartReciver();
         }
 
         void UpdateListView(string word)

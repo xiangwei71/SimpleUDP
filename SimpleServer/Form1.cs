@@ -16,14 +16,14 @@ namespace SimpleServer
     public partial class Form1 : Form
     {
         int listenPort = 5555;
-        UDPHandle uDPHandle;
+        UDPHandle udpHandle;
 
         public Form1()
         {
             InitializeComponent();
 
             Closing += (sender,e)=> {
-                if (uDPHandle!=null) uDPHandle.Quit();
+                Quit();
             };
         }
 
@@ -38,7 +38,7 @@ namespace SimpleServer
         {
             initClientDictionary();
 
-            uDPHandle = new UDPHandle(listenPort)
+            udpHandle = new UDPHandle(listenPort)
             {
                 packHandler = (commandType, content) =>
                 {
@@ -63,16 +63,21 @@ namespace SimpleServer
                     }
                 }
             };
-            uDPHandle.StartReciver();
+            udpHandle.StartReciver();
+        }
+
+        void Quit()
+        {
+            if (udpHandle != null)
+            {
+                udpHandle.Quit();
+                udpHandle = null;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (uDPHandle != null)
-            {
-                uDPHandle.Quit();
-                uDPHandle = null;
-            }
+            Quit();
 
             listen_btn.Enabled = true;
             quit_btn.Enabled = false;
@@ -91,7 +96,7 @@ namespace SimpleServer
 
             foreach (var ep in clientDictionary.Values)
             {
-                UdpClient sender = uDPHandle.Get();
+                UdpClient sender = udpHandle.Get();
                 sender.BeginSend(data, data.Length, ep, (ar)=> { }, sender);
             }
         }
