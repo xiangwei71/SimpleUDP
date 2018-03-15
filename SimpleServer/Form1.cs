@@ -40,21 +40,31 @@ namespace SimpleServer
 
             udpHandle = new UDPHandle(listenPort)
             {
-                packHandler = (commandType, content) =>
+                packHandler = (commandType, content, EP) =>
                 {
                     switch (commandType)
                     {
                         case ServerCommandType.add_user:
+                            {
+                                string userId = content;
 
-                            string key = content;
-                            string[] item = CommandHelper.GetItems(content);
-                            string ip = item[0];
-                            int listenPort = int.Parse(item[1]);
+                                string key = MakeKey(EP);
+                                Console.WriteLine("add key=" + key);
 
-                            Console.WriteLine(key);
-                            if (!clientDictionary.ContainsKey(key))
-                                clientDictionary.Add(key, new IPEndPoint(IPAddress.Parse(ip), listenPort));
+                                if (!clientDictionary.ContainsKey(key))
+                                    clientDictionary.Add(key, EP);
+                            }
+                            break;
+                        case ServerCommandType.remove_user:
+                            {
+                                string userId = content;
 
+                                string key = MakeKey(EP);
+                                Console.WriteLine("remove key=" + key);
+
+                                if (clientDictionary.ContainsKey(key))
+                                    clientDictionary.Remove(key);
+                            }
                             break;
                         case ServerCommandType.say:
                             SendToAll(content);
@@ -64,6 +74,14 @@ namespace SimpleServer
                 }
             };
             udpHandle.StartReciver();
+        }
+
+        string MakeKey(IPEndPoint EP)
+        {
+            string ip = EP.Address.ToString();
+            int listenPort = EP.Port;
+            string key = ip + ":" + listenPort.ToString();
+            return key;
         }
 
         void Quit()
@@ -89,6 +107,13 @@ namespace SimpleServer
             clientDictionary = new Dictionary<String, IPEndPoint>();
         }
 
+        void UpdateListView(string word)
+        {
+            this.BeginInvoke(new Action(() => {
+                word_listbox.Items.Add(word);
+            }), null);
+        }
+
         void SendToAll(string word)
         {
             string pack = CommandHelper.MakePackGet(word);
@@ -97,15 +122,8 @@ namespace SimpleServer
             foreach (var ep in clientDictionary.Values)
             {
                 UdpClient sender = udpHandle.Get();
-                sender.BeginSend(data, data.Length, ep, (ar)=> { }, sender);
+                sender.BeginSend(data, data.Length, ep, (ar) => { }, sender);
             }
         }
-
-        void UpdateListView(string word)
-        {
-            this.BeginInvoke(new Action(() => {
-                word_listbox.Items.Add(word);
-            }), null);
-        }     
     }
 }

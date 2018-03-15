@@ -16,7 +16,6 @@ namespace SimpleClient
     {
         string serverIP = "127.0.0.1";
         int serverListenPort = 5555;
-        int listenPort;
         UDPHandle udpHandle;
         public Form1()
         {
@@ -31,22 +30,16 @@ namespace SimpleClient
         {
             Init();
             SendAddUser();
+            userid_text.Enabled = false;
             listen_btn.Enabled = false;
             quit_btn.Enabled = true;
-        }
-
-        void SendAddUser()
-        {
-            string ip = GetLocalIP();
-            string port = listenPort.ToString();
-            string pack = CommandHelper.MakePackAddUser(ip, port);
-            Send(pack);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Quit();
 
+            userid_text.Enabled = true;
             listen_btn.Enabled = true;
             quit_btn.Enabled = false;
         }
@@ -55,6 +48,7 @@ namespace SimpleClient
         {
             if (udpHandle != null)
             {
+                SendRemoveUser();
                 udpHandle.Quit();
                 udpHandle = null;
             }
@@ -65,50 +59,11 @@ namespace SimpleClient
             SendWord();
         }
 
-        void SendWord()
-        {
-            string word = word_text.Text;
-            string userid = userid_text.Text;
-            string content = userid + ":" + word;
-            string pack = CommandHelper.MakePackSay(content);
-            Send(pack);
-        }
-
-        string GetLocalIP()
-        {
-            String strHostName = Dns.GetHostName();
-
-            // 取得本機的 IpHostEntry 類別實體
-            IPHostEntry iphostentry = Dns.GetHostEntry(strHostName);
-
-            //不可能都沒有吧
-            foreach (IPAddress ipaddress in iphostentry.AddressList)
-            {
-                // 只取得IP V4的Address
-                if (ipaddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {
-                    return ipaddress.ToString();
-                }
-            }
-
-            return "127.0.0.1";
-        }
-
-        void Send(string pack)
-        {
-            debug_label.Text = pack;
-            byte[] data = Encoding.UTF8.GetBytes(pack);
-
-            UdpClient sender = udpHandle.Get();
-            sender.BeginSend(data, data.Length, serverIP, serverListenPort,null, sender);
-        }
-
         void Init()
         {
-            listenPort = int.Parse(listenport_text.Text);
-            udpHandle = new UDPHandle(listenPort)
+            udpHandle = new UDPHandle()
             {
-                packHandler = (commandType, content) =>
+                packHandler = (commandType, content, EP) =>
                 {
                     switch (commandType)
                     {
@@ -128,6 +83,36 @@ namespace SimpleClient
             }), null);
         }
 
-        
+        void SendAddUser()
+        {
+            string userid = userid_text.Text;
+            string pack = CommandHelper.MakePackAddUser(userid);
+            Send(pack);
+        }
+
+        void SendRemoveUser()
+        {
+            string userid = userid_text.Text;
+            string pack = CommandHelper.MakePackRemoveUser(userid);
+            Send(pack);
+        }
+
+        void SendWord()
+        {
+            string word = word_text.Text;
+            string userid = userid_text.Text;
+            string content = userid + ":" + word;
+            string pack = CommandHelper.MakePackSay(content);
+            Send(pack);
+        }
+
+        void Send(string pack)
+        {
+            debug_label.Text = pack;
+            byte[] data = Encoding.UTF8.GetBytes(pack);
+
+            UdpClient sender = udpHandle.Get();
+            sender.BeginSend(data, data.Length, serverIP, serverListenPort, null, sender);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -29,13 +30,16 @@ namespace Library
             return str.Replace(pair_join, "").Replace(item_join, "");
         }
 
-        public static string MakePackAddUser(string ip,string port)
+        public static string MakePackAddUser(string userId)
         {
-            ip = ReplaceKeyWorld(ip);
-            port = ReplaceKeyWorld(port);
+            userId = ReplaceKeyWorld(userId);
+            return ServerCommandType.add_user+ pair_join + userId;
+        }
 
-            var items = new string[] { ip, port };
-            return ServerCommandType.add_user+ pair_join + string.Join(item_join,items);
+        public static string MakePackRemoveUser(string userId)
+        {
+            userId = ReplaceKeyWorld(userId);
+            return ServerCommandType.remove_user + pair_join + userId;
         }
 
         public static string MakePackSay(string word)
@@ -56,6 +60,7 @@ namespace Library
     public class ServerCommandType
     {
         public const string add_user = "add_user";
+        public const string remove_user = "remove_user";
         public const string say = "say";
     }
 
@@ -81,12 +86,17 @@ namespace Library
             return client;
         }
 
+        public UDPHandle()
+        {
+            this.listenPort = 0;//自動找一個沒使用的port
+        }
+
         public UDPHandle(int listenPort)
         {
             this.listenPort = listenPort;
 
             if(packHandler==null)
-                packHandler = (commandType, content) => { };//do nothing
+                packHandler = (commandType, content, EP) => { };//do nothing
         }
 
         public void StartReciver()
@@ -111,12 +121,13 @@ namespace Library
                     Byte[] receiveBytes = udpClient.EndReceive(ar, ref EP);
                     string pack = Encoding.UTF8.GetString(receiveBytes);
                     Console.WriteLine("port ="+EP.Port);
+                    Console.WriteLine("IP =" + EP.Address);
 
                     //handle msg
                     string[] pairs = CommandHelper.GetPairs(pack);
                     string commandType = pairs[0];
                     string content = pairs[1];
-                    packHandler(commandType, content);
+                    packHandler(commandType, content, EP);
 
                     Console.WriteLine("Waiting...");
                     udpClient.BeginReceive(BeginReceiveCallback, s);
@@ -138,7 +149,7 @@ namespace Library
             Console.WriteLine("finish");
         }
 
-        public delegate void PackHandler(string commandType, string content);
+        public delegate void PackHandler(string commandType, string content, IPEndPoint EP);
         public PackHandler packHandler;
     }
 }

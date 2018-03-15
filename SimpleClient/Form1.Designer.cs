@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listenport_text = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.listen_btn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.userid_text = new System.Windows.Forms.TextBox();
@@ -40,23 +38,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.debug_label = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // listenport_text
-            // 
-            this.listenport_text.Location = new System.Drawing.Point(122, 34);
-            this.listenport_text.Name = "listenport_text";
-            this.listenport_text.Size = new System.Drawing.Size(100, 25);
-            this.listenport_text.TabIndex = 0;
-            this.listenport_text.Text = "1234";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 34);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 15);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "listenPort";
             // 
             // listen_btn
             // 
@@ -153,8 +134,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.userid_text);
             this.Controls.Add(this.listen_btn);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.listenport_text);
             this.Name = "Form1";
             this.Text = "UDPChatClient";
             this.ResumeLayout(false);
@@ -163,9 +142,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox listenport_text;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button listen_btn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox userid_text;
