@@ -35,7 +35,7 @@
             this.word_text = new System.Windows.Forms.TextBox();
             this.quit_btn = new System.Windows.Forms.Button();
             this.word_listbox = new System.Windows.Forms.ListBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.send_btn = new System.Windows.Forms.Button();
             this.debug_label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -101,15 +101,16 @@
             this.word_listbox.Size = new System.Drawing.Size(452, 199);
             this.word_listbox.TabIndex = 9;
             // 
-            // button3
+            // send_btn
             // 
-            this.button3.Location = new System.Drawing.Point(264, 156);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "send";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.send_btn.Enabled = false;
+            this.send_btn.Location = new System.Drawing.Point(264, 156);
+            this.send_btn.Name = "send_btn";
+            this.send_btn.Size = new System.Drawing.Size(75, 23);
+            this.send_btn.TabIndex = 10;
+            this.send_btn.Text = "send";
+            this.send_btn.UseVisualStyleBackColor = true;
+            this.send_btn.Click += new System.EventHandler(this.button3_Click);
             // 
             // debug_label
             // 
@@ -126,7 +127,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.debug_label);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.send_btn);
             this.Controls.Add(this.word_listbox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.word_text);
@@ -149,7 +150,7 @@
         private System.Windows.Forms.TextBox word_text;
         private System.Windows.Forms.Button quit_btn;
         private System.Windows.Forms.ListBox word_listbox;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button send_btn;
         private System.Windows.Forms.Label debug_label;
     }
 }

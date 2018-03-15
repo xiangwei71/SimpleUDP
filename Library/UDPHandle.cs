@@ -120,8 +120,6 @@ namespace Library
                     IPEndPoint EP = s.senderEP;
                     Byte[] receiveBytes = udpClient.EndReceive(ar, ref EP);
                     string pack = Encoding.UTF8.GetString(receiveBytes);
-                    Console.WriteLine("port ="+EP.Port);
-                    Console.WriteLine("IP =" + EP.Address);
 
                     //handle msg
                     string[] pairs = CommandHelper.GetPairs(pack);

@@ -33,6 +33,7 @@ namespace SimpleClient
             userid_text.Enabled = false;
             listen_btn.Enabled = false;
             quit_btn.Enabled = true;
+            send_btn.Enabled = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -42,6 +43,7 @@ namespace SimpleClient
             userid_text.Enabled = true;
             listen_btn.Enabled = true;
             quit_btn.Enabled = false;
+            send_btn.Enabled = false;
         }
 
         void Quit()
@@ -108,6 +110,9 @@ namespace SimpleClient
 
         void Send(string pack)
         {
+            if (udpHandle == null)
+                return;
+
             debug_label.Text = pack;
             byte[] data = Encoding.UTF8.GetBytes(pack);
 
