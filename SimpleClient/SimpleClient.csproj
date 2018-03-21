@@ -74,6 +74,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChatProtocol\ChatProtocol.csproj">
+      <Project>{2ac22aab-0494-4bc8-8c24-8fd9675b86b7}</Project>
+      <Name>ChatProtocol</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleUDP\SimpleUDP.csproj">
       <Project>{dd71cc0f-d09f-4f50-a959-e061a84fb734}</Project>
       <Name>SimpleUDP</Name>

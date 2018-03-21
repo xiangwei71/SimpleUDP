@@ -9,68 +9,28 @@ using System.Threading;
 
 namespace SimpleUDP
 {
-    public class CommandHelper
+    public class UDPHandle
     {
-        const string pair_join = "?";
-        const string item_join = "&";
+        public const string IS = "?";
+        public const string AND = "&";
+
         //format => commandtype:content
         public static string[] GetPairs(string pack)
         {
-            return pack.Split(pair_join.ToArray<char>());
+            return pack.Split(UDPHandle.IS.ToArray<char>());
         }
 
         //format => "ip,listenPort"
         public static string[] GetItems(string content)
         {
-            return content.Split(item_join.ToArray<char>());
+            return content.Split(UDPHandle.AND.ToArray<char>());
         }
 
-        static string ReplaceKeyWorld(string str)
+        public static string ReplaceKeyWorld(string str)
         {
-            return str.Replace(pair_join, "").Replace(item_join, "");
+            return str.Replace(UDPHandle.IS, "").Replace(UDPHandle.AND, "");
         }
 
-        public static string MakePackAddUser(string userId)
-        {
-            userId = ReplaceKeyWorld(userId);
-            return ServerCommandType.add_user + pair_join + userId;
-        }
-
-        public static string MakePackRemoveUser(string userId)
-        {
-            userId = ReplaceKeyWorld(userId);
-            return ServerCommandType.remove_user + pair_join + userId;
-        }
-
-        public static string MakePackSay(string word)
-        {
-            word = ReplaceKeyWorld(word);
-
-            return ServerCommandType.say + pair_join + word;
-        }
-
-        public static string MakePackGet(string word)
-        {
-            word = ReplaceKeyWorld(word);
-
-            return ClientCommandType.get + pair_join + word;
-        }
-    }
-
-    public class ServerCommandType
-    {
-        public const string add_user = "add_user";
-        public const string remove_user = "remove_user";
-        public const string say = "say";
-    }
-
-    public class ClientCommandType
-    {
-        public const string get = "get";
-    }
-
-    public class UDPHandle
-    {
         //http://www.voidcn.com/article/p-ybrxkfvk-r.html
         class UDPState
         {
@@ -122,7 +82,7 @@ namespace SimpleUDP
                     string pack = Encoding.UTF8.GetString(receiveBytes);
 
                     //handle msg
-                    string[] pairs = CommandHelper.GetPairs(pack);
+                    string[] pairs = GetPairs(pack);
                     string commandType = pairs[0];
                     string content = pairs[1];
                     packHandler(commandType, content, EP);
