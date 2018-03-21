@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace Library
+namespace SimpleUDP
 {
     public class CommandHelper
     {
@@ -33,7 +33,7 @@ namespace Library
         public static string MakePackAddUser(string userId)
         {
             userId = ReplaceKeyWorld(userId);
-            return ServerCommandType.add_user+ pair_join + userId;
+            return ServerCommandType.add_user + pair_join + userId;
         }
 
         public static string MakePackRemoveUser(string userId)
@@ -95,7 +95,7 @@ namespace Library
         {
             this.bindPort = bindPort;
 
-            if(packHandler==null)
+            if (packHandler == null)
                 packHandler = (commandType, content, EP) => { };//do nothing
         }
 
@@ -105,12 +105,12 @@ namespace Library
 
             IPEndPoint senderEP = new IPEndPoint(IPAddress.Any, 0);
             Console.WriteLine("Waiting...");
-            client.BeginReceive(BeginReceiveCallback, new UDPState { udpClient = this.client, senderEP = senderEP } );
+            client.BeginReceive(BeginReceiveCallback, new UDPState { udpClient = this.client, senderEP = senderEP });
         }
 
         void BeginReceiveCallback(IAsyncResult ar)
         {
-            
+
             try
             {
                 if (ar.AsyncState is UDPState s)

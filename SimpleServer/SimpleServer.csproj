@@ -74,9 +74,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library\Library.csproj">
-      <Project>{320f1594-c9ba-4fc8-8021-6e47fadb1bc7}</Project>
-      <Name>Library</Name>
+    <ProjectReference Include="..\SimpleUDP\SimpleUDP.csproj">
+      <Project>{dd71cc0f-d09f-4f50-a959-e061a84fb734}</Project>
+      <Name>SimpleUDP</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

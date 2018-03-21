@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
-using Library;
+using SimpleUDP;
 
 namespace SimpleClient
 {
