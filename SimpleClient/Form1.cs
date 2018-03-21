@@ -70,7 +70,7 @@ namespace SimpleClient
                 {
                     switch (commandType)
                     {
-                        case ClientCommandType.get:
+                        case ChatClientCommandType.get:
                             UpdateListView(content);
                             break;
                     }
@@ -89,14 +89,14 @@ namespace SimpleClient
         void SendAddUser()
         {
             string userid = userid_text.Text;
-            string pack = CommandHelper.MakePackAddUser(userid);
+            string pack = ChatCommandHelper.MakePackAddUser(userid);
             Send(pack);
         }
 
         void SendRemoveUser()
         {
             string userid = userid_text.Text;
-            string pack = CommandHelper.MakePackRemoveUser(userid);
+            string pack = ChatCommandHelper.MakePackRemoveUser(userid);
             Send(pack);
         }
 
@@ -105,7 +105,7 @@ namespace SimpleClient
             string word = word_text.Text;
             string userid = userid_text.Text;
             string content = userid + ":" + word;
-            string pack = CommandHelper.MakePackSay(content);
+            string pack = ChatCommandHelper.MakePackSay(content);
             Send(pack);
         }
 

@@ -45,7 +45,7 @@ namespace SimpleServer
                 {
                     switch (commandType)
                     {
-                        case ServerCommandType.add_user:
+                        case ChatServerCommandType.add_user:
                             {
                                 string userId = content;
 
@@ -56,7 +56,7 @@ namespace SimpleServer
                                     clientDictionary.Add(key, EP);
                             }
                             break;
-                        case ServerCommandType.remove_user:
+                        case ChatServerCommandType.remove_user:
                             {
                                 string userId = content;
 
@@ -67,7 +67,7 @@ namespace SimpleServer
                                     clientDictionary.Remove(key);
                             }
                             break;
-                        case ServerCommandType.say:
+                        case ChatServerCommandType.say:
                             SendToAll(content);
                             UpdateListView(content);
                             break;
@@ -117,7 +117,7 @@ namespace SimpleServer
 
         void SendToAll(string word)
         {
-            string pack = CommandHelper.MakePackGet(word);
+            string pack = ChatCommandHelper.MakePackGet(word);
             byte[] data = Encoding.UTF8.GetBytes(pack);
 
             foreach (var ep in clientDictionary.Values)

@@ -20,7 +20,7 @@ namespace SimpleUDP
             return pack.Split(UDPHandle.IS.ToArray<char>());
         }
 
-        //format => "ip,listenPort"
+        //format => "ip&listenPort"
         public static string[] GetItems(string content)
         {
             return content.Split(UDPHandle.AND.ToArray<char>());
